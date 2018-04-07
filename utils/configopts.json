@@ -108,5 +108,30 @@
       }
     ],
     "default": "css"
+  },
+  "frame": {
+    "options": [
+      {
+        "name": "react-webpack-template",
+        "value": "react-webpack-template",
+        "packages": [
+          { "name": "react-webpack-template", "version": "^2.0.1-6" }
+        ]
+      },
+      {
+        "name": "vue-webpack",
+        "value": "vue-webpack",
+        "packages": [
+          { "name": "vue-webpack", "version": "^1.10.2" }
+        ]
+      },
+      {
+        "name": "angular-webpack",
+        "value": "angular-webpack",
+        "packages": [
+          { "name": "angular-webpack", "version": "^0.0.1" }
+        ]
+      }
+    ]
   }
 }

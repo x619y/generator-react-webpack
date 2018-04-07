@@ -9,8 +9,10 @@ const packageInfo = require('../../package.json');
 // Set the base root directory for our files. Make sure to always use the node_modules
 // base path instead of the require call only. This is needed because require.resolve
 // also includes the path set in package.json main keys!
-const baseRootPath = path.join(path.dirname(require.resolve('react-webpack-template')), '..');
-
+let baseRootPath = path.join(path.dirname(require.resolve('yeoman-generator')), '../..');
+console.log('.......................................'+require.resolve('yeoman-generator'));
+console.log('.......................................'+path.dirname(require.resolve('yeoman-generator')));
+console.log('.......................................'+baseRootPath);
 /**
  * Base generator. Will copy all required files from react-webpack-template
  */
@@ -42,6 +44,10 @@ class AppGenerator extends Generators.Base {
     }
   }
 
+  installingFrame(name){
+    this.npmInstall([name], { 'save-dev': true });
+  }
+
   prompting() {
 
     return this.prompt(prompts).then((answers) => {
@@ -53,6 +59,7 @@ class AppGenerator extends Generators.Base {
 
       // Set needed global vars for yo
       this.appName = answers.appName;
+      this.frame = answers.frame;
       this.style = answers.style;
       this.cssmodules = answers.cssmodules;
       this.postcss = answers.postcss;
@@ -61,15 +68,24 @@ class AppGenerator extends Generators.Base {
       // Set needed keys into config
       this.config.set('appName', this.appName);
       this.config.set('appPath', this.appPath);
+      this.config.set('frame',this.frame);
       this.config.set('style', this.style);
       this.config.set('cssmodules', this.cssmodules);
       this.config.set('postcss', this.postcss);
       this.config.set('generatedWithVersion', this.generatedWithVersion);
+
+
+      this.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk'+this.frame);
+      this.installingFrame(this.frame);
     });
   }
 
   configuring() {
-
+    baseRootPath = `${baseRootPath}/${this.frame}`;
+    this.sourceRoot(baseRootPath);
+    let jsonName = this.frame.split('-')[0];
+    this.log('+++++++++++++++++++++++'+jsonName);
+    this.log(`${baseRootPath}/${this.frame}/package.json`);
     // Generate our package.json. Make sure to also include the required dependencies for styles
     let defaultSettings = this.fs.readJSON(`${baseRootPath}/package.json`);
     let packageSettings = {
@@ -86,12 +102,22 @@ class AppGenerator extends Generators.Base {
       dependencies: defaultSettings.dependencies
     };
 
+    //Add needed frame
+    let frameConfig = utils.config.getChoiceByKey('frame',this.frame);
+    if(frameConfig && frameConfig.packages){
+
+      for(let dependency of frameConfig.packages){
+        packageSettings.devDependencies[dependency.name] = dependency.version;
+      }
+    }
+
     // Add needed loaders if we have special styles
     let styleConfig = utils.config.getChoiceByKey('style', this.style);
     if(styleConfig && styleConfig.packages) {
 
       for(let dependency of styleConfig.packages) {
         packageSettings.devDependencies[dependency.name] = dependency.version;
+        this.log('...................................................'+dependency.name);
       }
     }
 

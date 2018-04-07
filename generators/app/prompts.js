@@ -10,6 +10,13 @@ module.exports = [
   },
   {
     type: 'list',
+    name: 'frame',
+    message: 'Which frame do you want to use?',
+    choices: utils.config.getChoices('frame'),
+    default: utils.config.getDefaultChoice('frame')
+  },
+  {
+    type: 'list',
     name: 'style',
     message: 'Which style language do you want to use?',
     choices: utils.config.getChoices('style'),

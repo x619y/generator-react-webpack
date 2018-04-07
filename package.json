@@ -53,17 +53,19 @@
     "esprima": "^3.1.1",
     "esprima-walk": "^0.1.0",
     "jsonpath": "^0.2.7",
-    "react-webpack-template": "^2.0.1-6",
     "underscore.string": "^3.2.2",
     "yeoman-generator": "^0.24.0",
     "yeoman-welcome": "^1.0.1"
   },
   "devDependencies": {
+    "angular-webpack": "0.0.1",
     "chai": "^3.2.0",
     "coveralls": "^2.11.12",
     "fs-extra": "^0.30.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.0",
+    "react-webpack-template": "^2.0.1-6",
+    "vue-webpack": "^1.10.2",
     "yeoman-assert": "^2.1.1",
     "yeoman-test": "^1.0.0"
   },
